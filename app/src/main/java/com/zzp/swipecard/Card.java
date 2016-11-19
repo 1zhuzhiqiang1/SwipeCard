@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 /**
  * Created by Administrator on 2016/11/17 0017.
+ * 自定义卡片
  */
 public class Card extends RelativeLayout
 {

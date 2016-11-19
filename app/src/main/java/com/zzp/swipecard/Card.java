@@ -69,6 +69,8 @@ public class Card extends RelativeLayout
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        float dix = 0;
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startY = event.getX();
@@ -76,17 +78,19 @@ public class Card extends RelativeLayout
                 break;
             case MotionEvent.ACTION_MOVE:
 
+                dix = (event.getX() - startX);
+
+                fAngle = (float) (dix*0.1);
+
                 //向右
-                if (event.getX() - startX > 0 && fAngle < maxDegree) {
-                    fAngle += 2.5;
+                if (dix > 0) {
                     if (fAngle > 0) {
                         this.setPivotX(width - 100);
                         this.setPivotY(width);
                     }
                 }
                 //向左
-                else if (event.getX() - startX < 0 && fAngle > -maxDegree) {
-                    fAngle -= 2.5;
+                else if (dix < 0) {
                     if (fAngle < 0) {
                         this.setPivotX(100);
                         this.setPivotY(width);
@@ -108,14 +112,16 @@ public class Card extends RelativeLayout
 
                 MyLog.e("fAnble=" + fAngle);
 
-                this.setRotation(fAngle);
+                if (Math.abs(dix) > 0) {
+                    this.setRotation(fAngle);
+                }
 
                 //向右
-                if (event.getX() - startX > 0 && fAngle < maxDegree) {
+                if (dix > 0 && fAngle < maxDegree) {
                     this.setAlpha(Math.abs(1 - fAngle / 100f));
                 }
                 //向左
-                else if (event.getX() - startX < 0 && fAngle > -maxDegree) {
+                else if (dix < 0 && fAngle > -maxDegree) {
                     this.setAlpha(Math.abs(1 + fAngle / 100f));
                 }
 
